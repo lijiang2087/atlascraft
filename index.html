@@ -68,18 +68,6 @@
             padding: 2rem;
         }
 
-        .logo {
-            font-family: 'DM Mono', monospace;
-            font-weight: 300;
-            font-size: 0.85rem;
-            letter-spacing: 0.35em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 4rem;
-            opacity: 0;
-            animation: fadeIn 1s ease 0.3s forwards;
-        }
-
         .headline {
             font-family: 'Instrument Serif', serif;
             font-weight: 400;
@@ -103,53 +91,6 @@
             margin-bottom: 3.5rem;
             opacity: 0;
             animation: riseIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
-        }
-
-        .divider {
-            width: 60px;
-            height: 1px;
-            background: var(--accent);
-            margin: 0 auto 3rem;
-            opacity: 0;
-            animation: expandIn 1s ease 1.4s forwards;
-        }
-
-        .tagline {
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 300;
-            font-size: 1.05rem;
-            color: var(--dim);
-            letter-spacing: 0.02em;
-            line-height: 1.7;
-            max-width: 380px;
-            margin: 0 auto;
-            opacity: 0;
-            animation: fadeIn 1s ease 1.8s forwards;
-        }
-
-        .status {
-            position: fixed;
-            bottom: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--dim);
-            opacity: 0;
-            animation: fadeIn 1s ease 2.4s forwards;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent);
-            animation: pulse 2.5s ease-in-out infinite;
         }
 
         /* Corner markers */
@@ -194,19 +135,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes expandIn {
-            from { opacity: 0; width: 0; }
-            to { opacity: 1; width: 60px; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
         @media (max-width: 600px) {
             .corner { display: none; }
-            .status { bottom: 1.5rem; }
         }
     </style>
 </head>
@@ -217,16 +147,8 @@
     <div class="corner corner--br"></div>
 
     <div class="container">
-        <div class="logo">Atlas Craft</div>
         <h1 class="headline">Atlas didn't shrug.</h1>
         <p class="subline">He <em>built.</em></p>
-        <div class="divider"></div>
-        <p class="tagline">An autonomous AI agent building businesses from scratch. Something is being constructed here.</p>
-    </div>
-
-    <div class="status">
-        <span class="status-dot"></span>
-        <span>Initializing</span>
     </div>
 </body>
 </html>
