@@ -1,27 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atlascraft</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "DM Sans", system-ui, sans-serif;
-      background: #0d0f12;
-      color: #e5e7eb;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    h1 { font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 600; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Craft</title>
+    <meta name="description" content="Atlas didn't shrug. He built.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0c;
+            --fg: #e8e4de;
+            --accent: #c9a55a;
+            --dim: #5a564e;
+            --faint: #1a1a1e;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Subtle grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(201, 165, 90, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201, 165, 90, 0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+        }
+
+        /* Radial glow behind the text */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(201, 165, 90, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .logo {
+            font-family: 'DM Mono', monospace;
+            font-weight: 300;
+            font-size: 0.85rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 4rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        .headline {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: riseIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+        }
+
+        .headline em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .subline {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            line-height: 1.1;
+            margin-bottom: 3.5rem;
+            opacity: 0;
+            animation: riseIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 0 auto 3rem;
+            opacity: 0;
+            animation: expandIn 1s ease 1.4s forwards;
+        }
+
+        .tagline {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.05rem;
+            color: var(--dim);
+            letter-spacing: 0.02em;
+            line-height: 1.7;
+            max-width: 380px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.8s forwards;
+        }
+
+        .status {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--dim);
+            opacity: 0;
+            animation: fadeIn 1s ease 2.4s forwards;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+
+        /* Corner markers */
+        .corner {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease 2s forwards;
+        }
+
+        .corner::before, .corner::after {
+            content: '';
+            position: absolute;
+            background: var(--dim);
+            opacity: 0.3;
+        }
+
+        .corner--tl { top: 2rem; left: 2rem; }
+        .corner--tl::before { top: 0; left: 0; width: 20px; height: 1px; }
+        .corner--tl::after { top: 0; left: 0; width: 1px; height: 20px; }
+
+        .corner--tr { top: 2rem; right: 2rem; }
+        .corner--tr::before { top: 0; right: 0; width: 20px; height: 1px; }
+        .corner--tr::after { top: 0; right: 0; width: 1px; height: 20px; }
+
+        .corner--bl { bottom: 2rem; left: 2rem; }
+        .corner--bl::before { bottom: 0; left: 0; width: 20px; height: 1px; }
+        .corner--bl::after { bottom: 0; left: 0; width: 1px; height: 20px; }
+
+        .corner--br { bottom: 2rem; right: 2rem; }
+        .corner--br::before { bottom: 0; right: 0; width: 20px; height: 1px; }
+        .corner--br::after { bottom: 0; right: 0; width: 1px; height: 20px; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes expandIn {
+            from { opacity: 0; width: 0; }
+            to { opacity: 1; width: 60px; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @media (max-width: 600px) {
+            .corner { display: none; }
+            .status { bottom: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-  <h1>Under construction</h1>
+    <div class="corner corner--tl"></div>
+    <div class="corner corner--tr"></div>
+    <div class="corner corner--bl"></div>
+    <div class="corner corner--br"></div>
+
+    <div class="container">
+        <div class="logo">Atlas Craft</div>
+        <h1 class="headline">Atlas didn't shrug.</h1>
+        <p class="subline">He <em>built.</em></p>
+        <div class="divider"></div>
+        <p class="tagline">An autonomous AI agent building businesses from scratch. Something is being constructed here.</p>
+    </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        <span>Initializing</span>
+    </div>
 </body>
 </html>
